@@ -50,7 +50,35 @@ namespace MatchGame
             }
         
         }
+        /* Dodanie do gry obsługi kliknięcia myszą:
+         * Jeśli kliknięte zostało pierwsze zwierzę,
+         * należy zapisać, która kontrolka TextBlock została kliknięta i usunąć grafikę. 
+         * Jeżeli kliknięto drugie zwierzę, 
+         * należy albo też usunąć grafikę (dopasowanie) albo ponownie wyświetlić pierwszy rysunek (brak dopasowania)*/
+       
+        TextBlock lastTextBlockClicked;
+        bool findingMatch = false;
 
+         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TextBlock textblock = sender as TextBlock;
+            if (findingMatch == false)
+            {
+                textblock.Visibility = Visibility.Hidden;
+                lastTextBlockClicked = textblock;
+                findingMatch = true;
+            }
+            else if (textblock.Text == lastTextBlockClicked.Text)
+            {
+                textblock.Visibility = Visibility.Hidden;
+                findingMatch = false;
+            }
+            else
+            {
+                lastTextBlockClicked.Visibility = Visibility.Hidden;
+                findingMatch = false;
+            }
+        }
     }
 }
 
